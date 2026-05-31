@@ -2,10 +2,17 @@ package com.hei.demo.endpoint.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class AddServiceTest {
-  private final AddService addService = new AddService();
+
+  private AddService addService;
+
+  @BeforeEach
+  void setUp() {
+    this.addService = new AddService();
+  }
 
   @Test
   void shouldAddTwoPositiveNumbers() {
@@ -13,7 +20,16 @@ class AddServiceTest {
   }
 
   @Test
-  void shouldAddWithZero() {
-    assertEquals(10, addService.add(10, 0));
+  void shouldThrowExceptionWhenAddingWithZero() {
+    IllegalArgumentException exception =
+        assertThrows(IllegalArgumentException.class, () -> addService.add(10, 0));
+    assertEquals("a and b must be positive numbers", exception.getMessage());
+  }
+
+  @Test
+  void shouldThrowExceptionWhenAddingNegativeNumbers() {
+    IllegalArgumentException exception =
+        assertThrows(IllegalArgumentException.class, () -> addService.add(-5, 3));
+    assertEquals("a and b must be positive numbers", exception.getMessage());
   }
 }

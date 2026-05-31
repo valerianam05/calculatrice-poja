@@ -4,10 +4,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DivideService {
-  public int divide(int a, int b) {
+  public double divide(long a, long b) {
+    if (a <= 0 || b <= 0) {
+      throw new IllegalArgumentException("a and b must be positive numbers");
+    }
     if (b == 0) {
       throw new ArithmeticException("Division by zero is not allowed");
     }
-    return a / b;
+    return (double) a / b;
   }
 }
